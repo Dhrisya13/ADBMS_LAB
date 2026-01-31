@@ -166,3 +166,4 @@ mysql> DESC STUDENTS1;
 mysql> DROP TABLE STUDENTS1;
 Query OK, 0 rows affected (0.01 sec)
 
+//

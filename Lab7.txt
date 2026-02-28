@@ -1,0 +1,224 @@
+TCL & DCL COMMANDS
+------------------------
+a)TCL Commands
+1.Commit
+2.Rollback
+3.Savepoint
+
+1.mysql> SET AUTOCOMMIT = 0;
+Query OK, 1 row affected (0.00 sec)
+
+mysql> INSERT INTO EMPLOYEE VALUES(4,'karr','plkd',2025,5264);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> COMMIT;
+Query OK, 0 rows affected (0.00 sec)
+
+
+2.mysql> SET AUTOCOMMIT = 0;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> INSERT INTO EMPLOYEE VALUES(5,'neff','fjd',2025,5244);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> SELECT * FROM EMPLOYEE;
++------+--------+---------+------+----------+
+| SSN  | name   | city    | dob  | adhar_no |
++------+--------+---------+------+----------+
+|    1 | amii   | mukkam  | 2025 |     1123 |
+|    2 | anuu   | kochi   | 2026 |     5623 |
+|    3 | shaikk | alathur | 2024 |     5423 |
+|    4 | karr   | plkd    | 2025 |     5264 |
+|    5 | neff   | fjd     | 2025 |     5244 |
++------+--------+---------+------+----------+
+5 rows in set (0.00 sec)
+
+mysql> rollback;
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> SELECT * FROM EMPLOYEE;
++------+--------+---------+------+----------+
+| SSN  | name   | city    | dob  | adhar_no |
++------+--------+---------+------+----------+
+|    1 | amii   | mukkam  | 2025 |     1123 |
+|    2 | anuu   | kochi   | 2026 |     5623 |
+|    3 | shaikk | alathur | 2024 |     5423 |
+|    4 | karr   | plkd    | 2025 |     5264 |
++------+--------+---------+------+----------+
+4 rows in set (0.00 sec)
+
+
+mysql> SET AUTOCOMMIT = 0;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> INSERT INTO EMPLOYEE VALUES(5,'neyy','asdf',2025,9644);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> INSERT INTO EMPLOYEE VALUES(6,'neff','jufh',2025,9688);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> SELECT * FROM EMPLOYEE;
++------+--------+---------+------+----------+
+| SSN  | name   | city    | dob  | adhar_no |
++------+--------+---------+------+----------+
+|    1 | amii   | mukkam  | 2025 |     1123 |
+|    2 | anuu   | kochi   | 2026 |     5623 |
+|    3 | shaikk | alathur | 2024 |     5423 |
+|    4 | karr   | plkd    | 2025 |     5264 |
+|    5 | neyy   | asdf    | 2025 |     9644 |
+|    6 | neff   | jufh    | 2025 |     9688 |
++------+--------+---------+------+----------+
+6 rows in set (0.00 sec)
+
+3.mysql> SAVEPOINT sp1;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> UPDATE EMPLOYEE SET name='sinuu' WHERE SSN=2;
+Query OK, 1 row affected (0.00 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> SAVEPOINT sp2;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> INSERT INTO EMPLOYEE VALUES(7,'jeff','ghdg',2025,1022);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> SAVEPOINT sp3;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> SELECT * FROM EMPLOYEE;
++------+--------+---------+------+----------+
+| SSN  | name   | city    | dob  | adhar_no |
++------+--------+---------+------+----------+
+|    1 | amii   | mukkam  | 2025 |     1123 |
+|    2 | sinuu  | kochi   | 2026 |     5623 |
+|    3 | shaikk | alathur | 2024 |     5423 |
+|    4 | karr   | plkd    | 2025 |     5264 |
+|    5 | neyy   | asdf    | 2025 |     9644 |
+|    6 | neff   | jufh    | 2025 |     9688 |
+|    7 | jeff   | ghdg    | 2025 |     1022 |
++------+--------+---------+------+----------+
+7 rows in set (0.00 sec)
+
+mysql> DELETE FROM EMPLOYEE WHERE SSN=7;
+Query OK, 1 row affected (0.00 sec)
+
+mysql> SELECT * FROM EMPLOYEE;
++------+--------+---------+------+----------+
+| SSN  | name   | city    | dob  | adhar_no |
++------+--------+---------+------+----------+
+|    1 | amii   | mukkam  | 2025 |     1123 |
+|    2 | sinuu  | kochi   | 2026 |     5623 |
+|    3 | shaikk | alathur | 2024 |     5423 |
+|    4 | karr   | plkd    | 2025 |     5264 |
+|    5 | neyy   | asdf    | 2025 |     9644 |
+|    6 | neff   | jufh    | 2025 |     9688 |
++------+--------+---------+------+----------+
+6 rows in set (0.00 sec)
+
+mysql> ROLLBACK TO sp3;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> SELECT * FROM EMPLOYEE;
++------+--------+---------+------+----------+
+| SSN  | name   | city    | dob  | adhar_no |
++------+--------+---------+------+----------+
+|    1 | amii   | mukkam  | 2025 |     1123 |
+|    2 | sinuu  | kochi   | 2026 |     5623 |
+|    3 | shaikk | alathur | 2024 |     5423 |
+|    4 | karr   | plkd    | 2025 |     5264 |
+|    5 | neyy   | asdf    | 2025 |     9644 |
+|    6 | neff   | jufh    | 2025 |     9688 |
+|    7 | jeff   | ghdg    | 2025 |     1022 |
++------+--------+---------+------+----------+
+7 rows in set (0.00 sec)
+
+mysql> ROLLBACK TO sp1;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> SELECT * FROM EMPLOYEE;
++------+--------+---------+------+----------+
+| SSN  | name   | city    | dob  | adhar_no |
++------+--------+---------+------+----------+
+|    1 | amii   | mukkam  | 2025 |     1123 |
+|    2 | anuu   | kochi   | 2026 |     5623 |
+|    3 | shaikk | alathur | 2024 |     5423 |
+|    4 | karr   | plkd    | 2025 |     5264 |
+|    5 | neyy   | asdf    | 2025 |     9644 |
+|    6 | neff   | jufh    | 2025 |     9688 |
++------+--------+---------+------+----------+
+6 rows in set (0.00 sec)
+
+mysql> COMMIT;
+Query OK, 0 rows affected (0.00 sec)
+
+b)DCL Commands
+Create two users user1 ,user2
+1.GRANT: Give insert and select privilege to user 1 on customer table in the invoice database.
+      -> Give update and delete privilege to user 2 on all tables in the invoice database.
+2.REVOKE: Remove delete privilege of user 2.
+
+1.mysql> CREATE USER 'dhrisya'@'localhost' IDENTIFIED BY '1234';
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> GRANT SELECT ON ksb.EMPLOYEE TO 'dhrisya'@'localhost';
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> SHOW GRANTS FOR 'dhrisya'@'localhost';
++-----------------------------------------------------------+
+| Grants for dhrisya@localhost                              |
++-----------------------------------------------------------+
+| GRANT USAGE ON *.* TO `dhrisya`@`localhost`               |
+| GRANT SELECT ON `ksb`.`EMPLOYEE` TO `dhrisya`@`localhost` |
++-----------------------------------------------------------+
+2 rows in set (0.00 sec)
+
+mysql> CREATE USER 'user1'@'localhost' IDENTIFIED BY 'passs21';
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> CREATE USER 'user2'@'localhost' IDENTIFIED BY 'passs33';
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> GRANT INSERT ON INVOICE.CUSTOMER TO 'user1'@'localhost';
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> GRANT SELECT ON INVOICE.CUSTOMER TO 'user1'@'localhost';
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> GRANT UPDATE ON INVOICE.* TO 'user2'@'localhost';
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> GRANT DELETE ON INVOICE.* TO 'user2'@'localhost';
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> SHOW GRANTS FOR 'user1'@'localhost';
++---------------------------------------------------------------------+
+| Grants for user1@localhost                                          |
++---------------------------------------------------------------------+
+| GRANT USAGE ON *.* TO `user1`@`localhost`                           |
+| GRANT SELECT, INSERT ON `INVOICE`.`CUSTOMER` TO `user1`@`localhost` |
++---------------------------------------------------------------------+
+2 rows in set (0.00 sec)
+
+mysql> SHOW GRANTS FOR 'user2'@'localhost';
++------------------------------------------------------------+
+| Grants for user2@localhost                                 |
++------------------------------------------------------------+
+| GRANT USAGE ON *.* TO `user2`@`localhost`                  |
+| GRANT UPDATE, DELETE ON `INVOICE`.* TO `user2`@`localhost` |
++------------------------------------------------------------+
+2 rows in set (0.00 sec)
+
+
+2.mysql> REVOKE DELETE ON INVOICE.* FROM 'user2'@'localhost';
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> SHOW GRANTS FOR 'user2'@'localhost';
++----------------------------------------------------+
+| Grants for user2@localhost                         |
++----------------------------------------------------+
+| GRANT USAGE ON *.* TO `user2`@`localhost`          |
+| GRANT UPDATE ON `INVOICE`.* TO `user2`@`localhost` |
++----------------------------------------------------+
+2 rows in set (0.00 sec)
+

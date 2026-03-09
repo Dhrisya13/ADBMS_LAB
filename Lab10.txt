@@ -1,0 +1,35 @@
+1. List the product names, only include those purchased quantity more than 3.
+2. Find the product that has no sale.
+3. List the names of all customers who have purchased at least 2 products, making sure that
+no duplicate names are in the result.
+
+1.mysql> SELECT p_name FROM PRODUCT WHERE P_id IN (SELECT P_id FROM Invoice_Item WHERE quantity<3);
++---------+
+| p_name  |
++---------+
+| Apple   |
+| Samsung |
+| Oppo    |
+| Vivo    |
++---------+
+4 rows in set (0.00 sec)
+
+2.mysql> SELECT p_name FROM PRODUCT WHERE P_id NOT IN (SELECT P_id FROM Invoice_Item );
++--------+
+| p_name |
++--------+
+| Realme |
+| Moto   |
++--------+
+2 rows in set (0.00 sec)
+
+3.mysql> SELECT name FROM CUSTOMER WHERE cust_id IN (SELECT cust_id FROM Invoice_master WHERE inv_id IN (SELECT inv_id FROM Invoice_Item GROUP BY
+inv_id HAVING COUNT(P_id)<2));
++------+
+| name |
++------+
+| neff |
+| anuu |
++------+
+2 rows in set (0.00 sec)
+

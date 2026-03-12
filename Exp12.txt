@@ -1,0 +1,42 @@
+1.Create a trigger to handle inserts to the product relation ( if price < 25000 the set price to 50000).
+
+mysql> create trigger product_price before insert on PRODUCT for each row begin if new.price<25000 then set new.price=50000; end if; end//
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> insert into PRODUCT values(108,'Nothing',45000)//
+Query OK, 1 row affected (0.00 sec)
+
+mysql> select * from PRODUCT//
++------+---------+--------+
+| P_id | p_name  | price  |
++------+---------+--------+
+|  101 | Apple   |  96900 |
+|  102 | Samsung | 147900 |
+|  103 | Vivo    |  66300 |
+|  104 | Realme  |  25500 |
+|  105 | Xiaomi  |  61200 |
+|  106 | Oppo    |  30600 |
+|  107 | Moto    |  45900 |
+|  108 | Nothing |  45000 |
++------+---------+--------+
+8 rows in set (0.00 sec)
+
+mysql> insert into PRODUCT values(109,'Nothing',15000)//
+Query OK, 1 row affected (0.00 sec)
+
+mysql> select * from PRODUCT//
++------+---------+--------+
+| P_id | p_name  | price  |
++------+---------+--------+
+|  101 | Apple   |  96900 |
+|  102 | Samsung | 147900 |
+|  103 | Vivo    |  66300 |
+|  104 | Realme  |  25500 |
+|  105 | Xiaomi  |  61200 |
+|  106 | Oppo    |  30600 |
+|  107 | Moto    |  45900 |
+|  108 | Nothing |  45000 |
+|  109 | Nothing |  50000 |
++------+---------+--------+
+9 rows in set (0.00 sec)
+

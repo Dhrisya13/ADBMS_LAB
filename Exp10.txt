@@ -1,0 +1,36 @@
+1. Create a procedure to find greatest of 3 numbers. 
+2. Create a procedure to display invoice details of a particular customer.
+
+mysql> create procedure nos_max(in a int, in b int, in c int) begin if a>b and a>c then select a as greatest; elseif b>a and b>c then select b as greatest; else select c as greatest; end if; end//
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> call nos_max(4,5,6)//
++----------+
+| greatest |
++----------+
+|        6 |
++----------+
+1 row in set (0.00 sec)
+
+Query OK, 0 rows affected (0.00 sec)
+
+
+mysql> create procedure invo_details(in cid int) begin select CUSTOMER.cust_id,CUSTOMER.name,Invoice_master.inv_id,Invoice_master.Inv_date,PRODUCT.p_name,Invoice_Item.quantity,PRODUCT.price,(Invoice_Item.quantity * PRODUCT.price) as total from CUSTOMER join Invoice_master on CUSTOMER.cust_id=Invoice_master.cust_id join Invoice_Item on Invoice_master.inv_id=Invoice_Item.inv_id join PRODUCT on Invoice_Item.P_id=PRODUCT.P_id where
+CUSTOMER.cust_id = cid; end//
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> call invo_details(1003)//
+Empty set (0.00 sec)
+
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> call invo_details(3)//
++---------+------+--------+------------+--------+----------+-------+--------+
+| cust_id | name | inv_id | Inv_date   | p_name | quantity | price | total  |
++---------+------+--------+------------+--------+----------+-------+--------+
+|       3 | riya |   1005 | 2025-04-01 | Vivo   |        2 | 66300 | 132600 |
++---------+------+--------+------------+--------+----------+-------+--------+
+1 row in set (0.00 sec)
+
+Query OK, 0 rows affected (0.00 sec)
+

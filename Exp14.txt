@@ -1,0 +1,182 @@
+1. Write a MongoDB query to create an INVOICE database and collections (CUSTOMER,
+   PRODUCT) and its corresponding documents.
+2. Write a MongoDB query to find all documents from the collection CUSTOMER 
+3. Write a MongoDB query to update the city in the collection CUSTOMER. 
+4. Write a MongoDB query to delete the first matched document whose city is “Calicut”.
+
+1.test> use INVOICE;
+switched to db INVOICE
+INVOICE> db.createCollection('customer');
+{ ok: 1 }
+INVOICE> db.createCollection('Product');
+{ ok: 1 }
+INVOICE> db.customer.insert({"cust_id":1,"name":"aamii","city":"calicut","address":"street1","ph_no":"9523215486"});
+DeprecationWarning: Collection.insert() is deprecated. Use insertOne, insertMany, or bulkWrite.
+{
+  acknowledged: true,
+  insertedIds: { '0': ObjectId('69b7a68c75213b1457ef634b') }
+}
+
+INVOICE> db.customer.insert({"cust_id":2,"name":"shaikh","city":"ekm","address":"street2","ph_no":"9523219658"});
+{
+  acknowledged: true,
+  insertedIds: { '0': ObjectId('69b7a71275213b1457ef634c') }
+}
+INVOICE> db.customer.insert({"cust_id":3,"name":"dhrish","city":"plkd","address":"street3","ph_no":"9523236524"});
+{
+  acknowledged: true,
+  insertedIds: { '0': ObjectId('69b7a73375213b1457ef634d') }
+}
+
+INVOICE> db.Product.insert({"p_name":"pen","p_id":101,"price":6})
+{
+  acknowledged: true,
+  insertedIds: { '0': ObjectId('69b7a81c75213b1457ef634e') }
+}
+INVOICE> db.Product.insert({"p_name":"pencil","p_id":102,"price":7})
+{
+  acknowledged: true,
+  insertedIds: { '0': ObjectId('69b7a83275213b1457ef634f') }
+}
+INVOICE> db.Product.insert({"p_name":"eraser","p_id":103,"price":4})
+{
+  acknowledged: true,
+  insertedIds: { '0': ObjectId('69b7a84475213b1457ef6350') }
+}
+INVOICE> db.customer.find();
+[
+  {
+    _id: ObjectId('69b7a68c75213b1457ef634b'),
+    cust_id: 1,
+    name: 'aamii',
+    city: 'calicut',
+    address: 'street1',
+    ph_no: '9523215486'
+  },
+  {
+    _id: ObjectId('69b7a71275213b1457ef634c'),
+    cust_id: 2,
+    name: 'shaikh',
+    city: 'ekm',
+    address: 'street2',
+    ph_no: '9523219658'
+  },
+  {
+    _id: ObjectId('69b7a73375213b1457ef634d'),
+    cust_id: 3,
+    name: 'dhrish',
+    city: 'plkd',
+    address: 'street3',
+    ph_no: '9523236524'
+  }
+]
+INVOICE> db.Product.find();
+[
+  {
+    _id: ObjectId('69b7a81c75213b1457ef634e'),
+    p_name: 'pen',
+    p_id: 101,
+    price: 6
+  },
+  {
+    _id: ObjectId('69b7a83275213b1457ef634f'),
+    p_name: 'pencil',
+    p_id: 102,
+    price: 7
+  },
+  {
+    _id: ObjectId('69b7a84475213b1457ef6350'),
+    p_name: 'eraser',
+    p_id: 103,
+    price: 4
+  }
+]
+
+
+2.INVOICE> db.customer.find().pretty();
+[
+  {
+    _id: ObjectId('69b7a68c75213b1457ef634b'),
+    cust_id: 1,
+    name: 'aamii',
+    city: 'calicut',
+    address: 'street1',
+    ph_no: '9523215486'
+  },
+  {
+    _id: ObjectId('69b7a71275213b1457ef634c'),
+    cust_id: 2,
+    name: 'shaikh',
+    city: 'ekm',
+    address: 'street2',
+    ph_no: '9523219658'
+  },
+  {
+    _id: ObjectId('69b7a73375213b1457ef634d'),
+    cust_id: 3,
+    name: 'dhrish',
+    city: 'plkd',
+    address: 'street3',
+    ph_no: '9523236524'
+  }
+]
+
+3.INVOICE> db.customer.update({"city":"plkd"},{$set:{"city":"ekm"}});
+DeprecationWarning: Collection.update() is deprecated. Use updateOne, updateMany, or bulkWrite.
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 1,
+  modifiedCount: 1,
+  upsertedCount: 0
+}
+INVOICE> db.customer.find();
+[
+  {
+    _id: ObjectId('69b7a68c75213b1457ef634b'),
+    cust_id: 1,
+    name: 'aamii',
+    city: 'calicut',
+    address: 'street1',
+    ph_no: '9523215486'
+  },
+  {
+    _id: ObjectId('69b7a71275213b1457ef634c'),
+    cust_id: 2,
+    name: 'shaikh',
+    city: 'ekm',
+    address: 'street2',
+    ph_no: '9523219658'
+  },
+  {
+    _id: ObjectId('69b7a73375213b1457ef634d'),
+    cust_id: 3,
+    name: 'dhrish',
+    city: 'ekm',
+    address: 'street3',
+    ph_no: '9523236524'
+  }
+]
+
+4.INVOICE> db.customer.deleteOne({"city":"calicut"});
+{ acknowledged: true, deletedCount: 1 }
+INVOICE> db.customer.find();
+[
+  {
+    _id: ObjectId('69b7a71275213b1457ef634c'),
+    cust_id: 2,
+    name: 'shaikh',
+    city: 'ekm',
+    address: 'street2',
+    ph_no: '9523219658'
+  },
+  {
+    _id: ObjectId('69b7a73375213b1457ef634d'),
+    cust_id: 3,
+    name: 'dhrish',
+    city: 'ekm',
+    address: 'street3',
+    ph_no: '9523236524'
+  }
+]
+

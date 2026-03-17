@@ -1,0 +1,76 @@
+1. Write a MongoDB query to display the customer documents having city ‘ekm’,’tvm’. 
+2. Write a MongoDB query to display all product documents their price >5. 
+3. Write a MongoDB query to find customer documents who not live in ‘tvm’.
+
+1.INVOICE> db.customer.find({$or:[{"city":"tvm"},{"city":"ekm"}]});
+[
+  {
+    _id: ObjectId('69b7a73375213b1457ef634d'),
+    cust_id: 3,
+    name: 'dhrish',
+    city: 'ekm',
+    address: 'street3',
+    ph_no: '9523236524'
+  },
+  {
+    _id: ObjectId('69b8ea96fc0f5f3bddef634b'),
+    cust_id: 4,
+    name: 'amii',
+    city: 'tvm',
+    address: 'street4',
+    ph_no: '9523236526'
+  }
+]
+
+2.INVOICE> db.Product.find({$and:[{"price":{$gt:5}}]}).pretty();
+[
+  {
+    _id: ObjectId('69b7a81c75213b1457ef634e'),
+    p_name: 'pen',
+    p_id: 101,
+    price: 6
+  },
+  {
+    _id: ObjectId('69b7a83275213b1457ef634f'),
+    p_name: 'pencil',
+    p_id: 102,
+    price: 7
+  }
+]
+
+3.INVOICE> db.customer.find({city:{ $ne: "tvm" }});
+[
+  {
+    _id: ObjectId('69b7a71275213b1457ef634c'),
+    cust_id: 2,
+    name: 'shaikh',
+    city: 'mlp',
+    address: 'street2',
+    ph_no: '9523219658'
+  },
+  {
+    _id: ObjectId('69b7a73375213b1457ef634d'),
+    cust_id: 3,
+    name: 'dhrish',
+    city: 'ekm',
+    address: 'street3',
+    ph_no: '9523236524'
+  },
+  {
+    _id: ObjectId('69b8eab4fc0f5f3bddef634c'),
+    cust_id: 5,
+    name: 'karuu',
+    city: 'ptm',
+    address: 'street5',
+    ph_no: '9523236965'
+  },
+  {
+    _id: ObjectId('69b8eadbfc0f5f3bddef634d'),
+    cust_id: 6,
+    name: 'ami',
+    city: 'plkd',
+    address: 'street6',
+    ph_no: '8695236965'
+  }
+]
+
